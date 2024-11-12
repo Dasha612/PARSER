@@ -276,7 +276,7 @@ def is_similar(text1, text2, threshold=75):
 def are_posts_similar(post_text1, post_text2, threshold=3):
     words1 = Counter(post_text1.split())
     words2 = Counter(post_text2.split())
-    # Count the number of common words
+
     common_words = sum((words1 & words2).values())
     return common_words >= threshold
 
@@ -338,12 +338,13 @@ async def main():
                 "text": tg_post['text'],
                 "tg_link": tg_post['link']
             })
+    print(ok_posts)
 
     for ok_post in ok_posts:
         is_duplicate = False
         for unique_post in unique_posts:
             # Проверка на совпадение с существующим постом
-            if are_posts_similar(ok_post['text'], unique_post['text']):
+            if is_similar(ok_post['text'], unique_post['text']):
                 is_duplicate = True
                 unique_post["ok_link"] = shorten_ok_link(ok_post['link'])  # Сокращаем ссылку и добавляем её
                 break
@@ -354,6 +355,8 @@ async def main():
                 "text": ok_post['text'],
                 "ok_link": shorten_ok_link(ok_post['link'])  # Сокращаем ссылку
             })
+
+    #print(unique_posts)
 
 
     await sheets_writer.write_data(unique_posts)
