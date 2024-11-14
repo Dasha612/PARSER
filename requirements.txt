@@ -1,0 +1,12 @@
+gspread
+oauth2client
+telethon
+aiohttp
+beautifulsoup4
+certifi
+gspread-formatting
+fuzzywuzzy
+python-Levenshtein
+pytz
+typing-extensions
+lxml

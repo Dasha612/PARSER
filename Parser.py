@@ -13,8 +13,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from gspread_formatting import *
 from fuzzywuzzy import fuzz
-import re
-from collections import Counter
+
 ssl_context = ssl.create_default_context(cafile=certifi.where())
 token = '7882a1f47882a1f47882a1f41a7b9cc7f4778827882a1f41e6b688dd789f59313170b67'
 version = '5.199'
@@ -269,19 +268,14 @@ class GoogleSheetsWriter:
 
 def is_similar(text1, text2, threshold=75):
 
-    similarity = fuzz.ratio(text1, text2)
+    similarity = fuzz.partial_ratio(text1, text2)
     return similarity > threshold
 
-# Function to check if two posts are duplicates by comparing word similarity
-def are_posts_similar(post_text1, post_text2, threshold=3):
-    words1 = Counter(post_text1.split())
-    words2 = Counter(post_text2.split())
-
-    common_words = sum((words1 & words2).values())
-    return common_words >= threshold
 
 def shorten_ok_link(link):
     return link.split('?')[0]
+
+
 async def main():
 
     vk_parser = VKParser("7882a1f47882a1f47882a1f41a7b9cc7f4778827882a1f41e6b688dd789f59313170b67", 'mdk_nn', '5.199')
@@ -292,8 +286,6 @@ async def main():
 
     # Пример использования GoogleSheetsWriter
     sheets_writer = GoogleSheetsWriter('credentials.json', 'MDK NN Data')
-
-    data = []
     unique_posts = []
 
 
@@ -338,7 +330,7 @@ async def main():
                 "text": tg_post['text'],
                 "tg_link": tg_post['link']
             })
-    print(ok_posts)
+
 
     for ok_post in ok_posts:
         is_duplicate = False
@@ -356,7 +348,6 @@ async def main():
                 "ok_link": shorten_ok_link(ok_post['link'])  # Сокращаем ссылку
             })
 
-    #print(unique_posts)
 
 
     await sheets_writer.write_data(unique_posts)
