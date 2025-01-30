@@ -1,13 +1,44 @@
-# Исключение настроек среды разработки PyCharm
+# Настройки среды разработки
+.vscode/
 .idea/
+*.iml
 
-# Исключение виртуального окружения
+# Виртуальное окружение
+venv/
 .venv/
+env/
 
-# Исключение скомпилированных файлов Python
+# Кеши Python
 *.pyc
+*.pyo
+*.pyd
 __pycache__/
 
-# Исключение системных файлов Windows/Mac
-*.DS_Store
+# Логи и временные файлы
+*.log
+*.bak
+*.swp
+*.swo
+*.swn
+*.tmp
+
+# Чувствительные данные
+.env
+parser_tg.session*
+credentials.json
+
+# Системные файлы
+.DS_Store
 Thumbs.db
+ehthumbs.db
+
+# Файлы зависимостей
+Pipfile
+Pipfile.lock
+poetry.lock
+
+# Артефакты сборки
+build/
+dist/
+*.egg-info/
+

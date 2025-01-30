@@ -15,8 +15,8 @@ from gspread_formatting import *
 from fuzzywuzzy import fuzz
 
 ssl_context = ssl.create_default_context(cafile=certifi.where())
-token = '7882a1f47882a1f47882a1f41a7b9cc7f4778827882a1f41e6b688dd789f59313170b67'
-version = '5.199'
+token = 'TOKEN'
+version = '1234'
 domain = 'mdk_nn'
 
 class Parser:
@@ -278,7 +278,7 @@ def shorten_ok_link(link):
 
 async def main():
 
-    vk_parser = VKParser("7882a1f47882a1f47882a1f41a7b9cc7f4778827882a1f41e6b688dd789f59313170b67", 'mdk_nn', '5.199')
+    vk_parser = VKParser("1234", 'mdk_nn', '123343')
 
     # Получаем посты за последние 24 часа
     vk_posts = await vk_parser.get_posts()
@@ -289,7 +289,7 @@ async def main():
     unique_posts = []
 
 
-    tg_parser = TGParser('23706087', '96b3c3744ed446a5192186c40f517564', '+79087235739')
+    tg_parser = TGParser('', '', '+123')
     tg_posts = await tg_parser.get_posts()
 
     ok_parser = OKParser('https://ok.ru/group/61322896802030')
